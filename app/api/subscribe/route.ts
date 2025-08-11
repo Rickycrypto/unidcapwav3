@@ -1,8 +1,7 @@
 // app/api/subscribe/route.ts
 import { NextResponse } from 'next/server';
-import { saveEmailSubscriber, savePushSubscriber } from '../../../lib/subscribers';
+import { saveEmailSubscriber, savePushSubscriber } from '@/lib/subscribers';
 
-// Accept either an email OR a Web Push subscription object
 export async function POST(req: Request) {
   const data = await req.json().catch(() => null);
 
@@ -27,4 +26,3 @@ export async function POST(req: Request) {
 export async function GET() {
   return NextResponse.json({ ok: true });
 }
-
