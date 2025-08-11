@@ -1,6 +1,7 @@
+// app/api/broadcast/route.ts
 import { NextResponse } from 'next/server';
 import webpush from 'web-push';
-import { listPushSubscribers } from '@/lib/subscribers';
+import { listPushSubscribers } from '../../../lib/subscribers';
 
 export async function POST(req: Request) {
   const key = process.env.BROADCAST_KEY || '';
