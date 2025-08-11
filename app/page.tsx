@@ -54,5 +54,19 @@ export default function Page() {
       <hr style={{ margin: '20px 0' }}/>
       <p>Keep Safari open in the background for iPhone PWA push reliability. Install via Safari → Share → Add to Home Screen.</p>
     </div>
-  )
+  // app/page.tsx
+import EnablePushButton from './EnablePushButton';
+
+export default function HomePage() {
+  return (
+    <main style={{ padding: 24 }}>
+      <h1>Welcome to My App</h1>
+      <p>Click below to enable push notifications:</p>
+
+      {/* 👇 The button goes here */}
+      <EnablePushButton />
+    </main>
+  );
 }
+
+
