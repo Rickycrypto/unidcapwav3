@@ -1,18 +1,30 @@
+// app/api/subscribe/route.ts
+import { NextResponse } from 'next/server';
+import { z } from 'zod';
 
-import { NextResponse } from 'next/server'
+const Body = z.object({ email: z.string().email() });
 
-// naive in-memory store (for demo only). For production, replace with Vercel KV/Upstash or your DB.
-const subs: any[] = []
-
+// POST /api/subscribe
 export async function POST(req: Request) {
-  const body = await req.json()
-  // avoid duplicates by endpoint
-  const exists = subs.find((s) => s?.endpoint === body?.endpoint)
-  if (!exists) subs.push(body)
-  return NextResponse.json({ ok: true })
+  const data = await req.json().catch(() => null);
+  const parsed = Body.safeParse(data);
+  if (!parsed.success) {
+    return NextResponse.json({ error: 'Invalid email' }, { status: 400 });
+  }
+
+  const { email } = parsed.data;
+
+  // TODO: persist to your DB / provider
+  // await saveSubscriber(email);
+
+  return NextResponse.json({ ok: true });
 }
 
-// Helper for broadcast module
-export function getSubs() {
-  return subs
+// GET /api/subscribe (optional)
+export async function GET() {
+  // const subs = await listSubscribers();
+  return NextResponse.json({ ok: true /*, subs*/ });
 }
+
+// If you hit caching issues when reading from a DB, uncomment:
+// export const dynamic = 'force-dynamic';
